@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satriamail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="app-name">Satriamail</div>
+    </div>
+
+    <div id="landingPage" class="tab-view active">
+        <div class="hero-card">
+            <div class="icon-glow"><i class="fas fa-envelope-open-text"></i></div>
+            <h2>Daftar dengan nama</h2>
+            <p>kamu akan mendapatkan alamat  <strong>nama@satria.dev</strong></p>
+        </div>
+        <div class="email-action-area" style="margin-top:-10px;">
+            <label>Nama kamu</label>
+            <input type="text" id="usernameInput" class="compose-input" placeholder="cth: Ilham" style="margin-bottom:12px;">
+            <label>Foto profile (opsional - upload)</label>
+            <input type="file" id="avatarUpload" accept="image/*" class="compose-input" style="padding:10px;">
+            <label>Bio (opsional)</label>
+            <textarea id="bioInput" class="public-textarea" rows="2" placeholder="tulis bio singkat..."></textarea>
+            <button id="createAccountBtn" class="send-btn" style="width:100%; margin-top:16px;"><i class="fas fa-arrow-right"></i> Lanjut</button>
+        </div>
+    </div>
+
+    <div id="homePage" class="tab-view" style="display:none;">
+        <div class="profile-card" id="profileAvatar">
+            <div class="profile-card-avatar">
+                <img src="" id="profileAvatarImg" alt="">
+            </div>
+            <div class="profile-card-info">
+                <h3 id="profileName"></h3>
+                <p id="profileBio"></p>
+            </div>
+        </div>
+        <div class="email-action-area">
+            <label>Email mu</label>
+            <div class="email-display">
+                <span id="userEmail"></span>
+                <button class="copy-btn" id="copyEmailBtn"><i class="far fa-copy"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="inboxPage" class="tab-view" style="display:none;">
+        <div class="section-header">
+            <h2>Inbox <span class="badge" id="unreadBadge"></span></h2>
+            <button class="trash-btn" id="clearInboxBtn"><i class="fas fa-trash"></i></button>
+        </div>
+        <div id="inboxList" class="message-list"></div>
+        <div id="emptyInbox" class="empty-placeholder"><i class="fas fa-inbox"></i> belum ada pesan</div>
+    </div>
+
+    <div id="publicPage" class="tab-view" style="display:none;">
+        <div class="section-header"><h2>Public chat</h2></div>
+        <div id="publicList" class="public-chat-container"></div>
+        <div id="replyContextBadge" class="reply-context-badge" style="display:none;">
+            <i class="fas fa-reply"></i> Membalas ke <span id="replyToName"></span>: <span id="replyToText"></span>
+            <span style="margin-left:auto; cursor:pointer;" id="cancelReply"><i class="fas fa-times"></i></span>
+        </div>
+        <textarea id="publicInput" class="public-textarea" placeholder="Tulis pesan publik..." rows="2"></textarea>
+        <button id="sendPublicBtn" class="btn-secondary-full"><i class="fas fa-paper-plane"></i> Kirim ke publik</button>
+    </div>
+
+    <div id="composePage" class="tab-view" style="display:none;">
+        <div class="section-header"><h2>Kirim pesan</h2></div>
+        <div class="email-action-area">
+            <label>Nama tujuan</label>
+            <input type="text" id="targetName" class="compose-input" placeholder="contoh: ilham">
+            <label>Pesan</label>
+            <textarea id="messageText" class="public-textarea" rows="4" placeholder="tulis pesan..."></textarea>
+            <button id="sendMsgBtn" class="btn-secondary-full"><i class="fas fa-paper-plane"></i> Kirim pesan</button>
+        </div>
+    </div>
+
+    <div id="satriaPage" class="tab-view" style="display:none;">
+        <div class="hero-card">
+            <div class="icon-glow"><i class="fas fa-paper-plane"></i></div>
+            <h2 id="satriaTitle">Kirim pesan ke tujuan</h2>
+            <p>isi formulir di bawah untuk mengirim pesan</p>
+        </div>
+        <div class="email-action-area" style="margin-top:-10px;">
+            <label>Dari (nama kamu)</label>
+            <input type="text" id="satriaFromName" class="compose-input" placeholder="cth: Budi" style="margin-bottom:12px;">
+            <label>Email tujuan</label>
+            <input type="text" id="satriaTargetEmail" class="compose-input" placeholder="nama@satria.dev" style="margin-bottom:12px;">
+            <label>Pesan</label>
+            <textarea id="satriaMessage" class="public-textarea" rows="4" placeholder="tulis pesan..."></textarea>
+            <button id="satriaSendBtn" class="send-btn" style="width:100%; margin-top:16px;"><i class="fas fa-paper-plane"></i> Kirim Pesan</button>
+            <button id="satriaBackBtn" class="btn-secondary-full" style="margin-top:8px;"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav" id="bottomNav" style="display:none;">
+        <div class="nav-item active" data-tab="home"><i class="fas fa-home"></i><span>Home</span></div>
+        <div class="nav-item" data-tab="inbox"><div class="icon-wrapper"><i class="fas fa-inbox"></i><span class="nav-dot" style="display:none;"></span></div><span>Inbox</span></div>
+        <div class="nav-fab" data-tab="compose"><i class="fas fa-feather-alt"></i><span>Send</span></div>
+        <div class="nav-item" data-tab="public"><i class="fas fa-globe"></i><span>Public</span></div>
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pengaturan Profile</h3>
+                <button class="close-btn" id="closeProfileModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="profile-settings">
+                <div class="settings-avatar">
+                    <img src="" id="settingsAvatarImg">
+                </div>
+                <div class="settings-input">
+                    <label>Foto profile (upload)</label>
+                    <input type="file" id="settingsAvatarUpload" accept="image/*">
+                </div>
+                <div class="settings-input">
+                    <label>Nama</label>
+                    <input type="text" id="settingsName" disabled>
+                </div>
+                <div class="settings-input">
+                    <label>Bio</label>
+                    <textarea id="settingsBio" rows="3"></textarea>
+                </div>
+                <button id="saveProfileBtn" class="send-btn" style="width:100%;"><i class="fas fa-save"></i> Simpan</button>
+                <button id="deleteAccountBtn" class="delete-btn"><i class="fas fa-trash"></i> Hapus Akun</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="userProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Profile Pengguna</h3>
+                <button class="close-btn" id="closeUserProfile"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="profile-settings">
+                <div class="settings-avatar" id="viewAvatar">
+                    <img src="" id="viewAvatarImg">
+                </div>
+                <div class="settings-input">
+                    <label>Nama</label>
+                    <input type="text" id="viewName" disabled>
+                </div>
+                <div class="settings-input">
+                    <label>Email</label>
+                    <input type="text" id="viewEmail" disabled>
+                </div>
+                <div class="settings-input">
+                    <label>Bio</label>
+                    <textarea id="viewBio" rows="3" disabled></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" id="closeMsgModal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-meta">
+                <div class="meta-avatar"><img src="" id="modalAvatarImg"></div>
+                <div class="meta-info">
+                    <span class="meta-from" id="modalFrom"></span>
+                    <span class="meta-time" id="modalTime"></span>
+                </div>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-actions">
+                <button class="reply-modal-btn" id="modalReplyBtn"><i class="fas fa-reply"></i> Balas</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast"></div>
+
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>
